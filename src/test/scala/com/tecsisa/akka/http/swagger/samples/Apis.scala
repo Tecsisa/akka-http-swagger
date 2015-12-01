@@ -18,8 +18,8 @@ package com.tecsisa.akka.http.swagger.samples
 import javax.ws.rs.Path
 
 import akka.actor.Actor
-import akka.http.scaladsl.server.Directives
-import akka.stream.scaladsl.ImplicitFlowMaterializer
+import akka.http.scaladsl.server.Directives._
+import akka.stream.scaladsl._
 import com.tecsisa.akka.http.swagger.utils.JsonMarshalling
 import com.wordnik.swagger.annotations._
 
@@ -31,7 +31,7 @@ abstract class TestApiDoesNotExtendHttpService
 
 @Api(value = "/test")
 abstract class TestApiWithOnlyDataType {
-  _: Actor with ImplicitFlowMaterializer with Directives =>
+  _: Actor =>
 
   @ApiOperation(value = "testApiOperation", httpMethod = "GET")
   @ApiImplicitParams(Array(new ApiImplicitParam(name = "test", value = "test param", dataType = "TestModel", paramType = "query")))
@@ -40,8 +40,7 @@ abstract class TestApiWithOnlyDataType {
 
 @Api(value = "/test")
 abstract class TestApiWithPathOperation {
-  _: Actor with ImplicitFlowMaterializer with Directives
-    with JsonMarshalling =>
+  _: Actor with JsonMarshalling =>
 
   @Path("/sub/{someParam}/path/{anotherParam}")
   @ApiOperation(value = "subPathApiOperation", httpMethod = "GET", notes = "some notes")
@@ -58,8 +57,7 @@ abstract class TestApiWithPathOperation {
 
 @Api(value = "/test")
 abstract class TestApiWithParamsHierarchy {
-  _: Actor with ImplicitFlowMaterializer with Directives
-    with JsonMarshalling =>
+  _: Actor with JsonMarshalling =>
 
   @Path("/paramHierarchyOperation")
   @ApiOperation(value = "paramHierarchyOperation", httpMethod = "GET", response = classOf[ModelExtension])
@@ -72,8 +70,7 @@ abstract class TestApiWithParamsHierarchy {
 // order here (as indicated by `value`) doesn't match the position attributes
 @Api(value = "/test")
 abstract class TestApiWithOperationPositions {
-  _: Actor with ImplicitFlowMaterializer with Directives
-    with JsonMarshalling =>
+  _: Actor with JsonMarshalling =>
 
   @Path("/path1")
   @ApiOperation(position = 3, value = "order3", httpMethod = "GET", response = classOf[ModelBase])
@@ -95,8 +92,7 @@ abstract class TestApiWithOperationPositions {
 
 @Api(value = "/test", basePath = "http://override.com/api")
 abstract class TestApiWithBasePathAnnotation {
-  _: Actor with ImplicitFlowMaterializer with Directives
-    with JsonMarshalling =>
+  _: Actor with JsonMarshalling =>
 
   @ApiOperation(value = "testApiOperation", httpMethod = "GET")
   @ApiImplicitParams(Array(new ApiImplicitParam(name = "pathParam", value = "test param", dataType = "string", paramType = "path")))

@@ -2,9 +2,9 @@ package com.tecsisa.akka.http.swagger
 
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.http.scaladsl.model.ContentTypes
-import akka.http.scaladsl.server.Directives
+import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import akka.stream.scaladsl.ImplicitFlowMaterializer
+import akka.stream.scaladsl._
 import akka.testkit.TestActorRef
 import com.tecsisa.akka.http.swagger.samples.{PetHttpService, UserHttpService}
 import com.tecsisa.akka.http.swagger.utils.JsonMarshalling
@@ -23,7 +23,7 @@ class SwaggerHttpServiceSpec
   val systemTest: ActorSystem = system
 
   val swaggerService: SwaggerHttpService = TestActorRef.create(system, Props(new SwaggerHttpService
-    with Actor with ImplicitFlowMaterializer with Directives with JsonMarshalling {
+    with Actor with JsonMarshalling {
     def apiTypes = Seq(typeOf[PetHttpService], typeOf[UserHttpService])
     def apiVersion = "2.0"
     override def baseUrl = "http://some.domain.com/api"
