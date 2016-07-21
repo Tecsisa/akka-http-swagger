@@ -16,10 +16,10 @@
 
 package com.tecsisa.akka.http.swagger
 
-import akka.actor.{Actor, ActorSystem}
+import akka.actor.{ Actor, ActorSystem }
 import akka.http.scaladsl.marshalling._
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.Route
+import akka.http.scaladsl.server.{ ImplicitPathMatcherConstruction, Route }
 import com.wordnik.swagger.config.SwaggerConfig
 import com.wordnik.swagger.core.SwaggerSpec
 import com.wordnik.swagger.model._
@@ -28,7 +28,7 @@ import org.json4s.Formats
 import scala.concurrent.ExecutionContextExecutor
 import scala.reflect.runtime.universe.Type
 
-trait SwaggerHttpService {
+trait SwaggerHttpService extends ImplicitPathMatcherConstruction {
   _: Actor =>
 
   def apiTypes: Seq[Type]
@@ -67,7 +67,7 @@ trait SwaggerHttpService {
           (subPath, apiListing) <- api.listings
         ) yield {
           path(docsPath / subPath.drop(1).split('/').map(
-            segmentStringToPathMatcher _
+            _segmentStringToPathMatcher _
           ).reduceLeft(_ / _)) {
              get{
                complete(apiListing)

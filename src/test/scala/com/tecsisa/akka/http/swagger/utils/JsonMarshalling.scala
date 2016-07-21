@@ -13,7 +13,7 @@ import scala.concurrent.ExecutionContext
 trait JsonMarshalling {
   implicit def feum[A: Manifest](implicit formats: Formats, m: ActorMaterializer, ec: ExecutionContext): FromEntityUnmarshaller[A] =
     PredefinedFromEntityUnmarshallers.stringUnmarshaller.flatMapWithInput { (entity, s) =>
-      if (entity.contentType().mediaType == MediaTypes.`application/json`)
+      if (entity.contentType.mediaType == MediaTypes.`application/json`)
         FastFuture.successful(org.json4s.native.Serialization.read[A](s))
       else
         FastFuture.failed(

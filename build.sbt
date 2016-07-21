@@ -1,15 +1,15 @@
 organization := "com.tecsisa"
 
 name := "akka-http-swagger"
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 val SwaggerVersion = "1.3.12"
-val AkkaStreamVersion = "2.0-M2"
+val AkkaStreamVersion = "2.4.8"
 
 
 libraryDependencies ++=  Seq(
   // akka http
-  "com.typesafe.akka" %% "akka-stream-experimental" % AkkaStreamVersion,
+  "com.typesafe.akka" %% "akka-stream" % AkkaStreamVersion,
   "com.typesafe.akka" %% "akka-http-experimental" % AkkaStreamVersion,
 
   // swagger
@@ -23,7 +23,7 @@ libraryDependencies ++=  Seq(
 
 // test
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-http-testkit-experimental" % AkkaStreamVersion % "test",
+  "com.typesafe.akka" %% "akka-http-testkit" % AkkaStreamVersion % "test",
   "org.scalatest" %% "scalatest" % "2.2.4" % "test",
   "com.github.nscala-time" %% "nscala-time" % "2.0.0" % "test",
   "org.json4s" %% "json4s-jackson" % "3.2.11" % "test"
